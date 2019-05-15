@@ -21,8 +21,8 @@ git config --global user.name "Codeship CI"
 lerna version --exact --amend --convertional-commits --yes --no-commit-hooks --no-git-tag-version --no-push
 
 # Commiting changes
-version="v$(npx -c 'json -f lerna.json version')"
-npx -c 'json -I -f package.json -e "this.version=\"$version\""'
+version="v$(json -f lerna.json version)"
+json -I -f package.json -e "this.version=\"$version\""
 
 # publishing
 npm run packages-build
