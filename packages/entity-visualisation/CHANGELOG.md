@@ -3,6 +3,17 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.6.2](https://github.com/burnsred/burnsred-entity-library/compare/v0.5.2...v0.6.2) (2019-05-15)
+
+
+### Bug Fixes
+
+* deploy ([28349bb](https://github.com/burnsred/burnsred-entity-library/commit/28349bb))
+
+
+
+
+
 ## [0.5.2](https://github.com/gnowth/entity/compare/v0.5.1...v0.5.2) (2019-05-14)
 
 

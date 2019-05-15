@@ -1,9 +1,9 @@
 import _ from 'lodash';
 import React from 'react';
-import { useDefault } from '@gnowth/default';
-import { useReduxState } from '@private/use-redux';
+import { useDefault } from '@burnsred/default';
 import { Redirect } from 'react-router-dom';
 
+import { useReduxState } from '../../../../src/private-use-redux';
 import { Context } from '../context';
 
 const mapDefault = {
