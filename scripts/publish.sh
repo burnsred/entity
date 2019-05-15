@@ -4,7 +4,7 @@ set -e
 pwd
 
 # get current branch
-current=$(git symbolic-ref --short HEAD)
+current=$(git rev-parse HEAD)
 
 # not strick check for github
 mkdir -p ~/.ssh/
