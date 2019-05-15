@@ -4,6 +4,7 @@ set -e
 pwd
 
 # get current branch
+git checkout master
 current=$(git symbolic-ref --short HEAD)
 
 # not strick check for github
