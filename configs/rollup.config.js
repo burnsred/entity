@@ -1,14 +1,15 @@
 import babel from '@rollup/plugin-babel';
-import copy from 'rollup-plugin-copy';
 import json from '@rollup/plugin-json';
 import path from 'path';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+
 const rootPath = process.cwd();
 
-// eslint-disable-next-line import/no-dynamic-require
 const packageFile = require(path.join(rootPath, 'package.json'));
 const dependencies = []
   .concat(packageFile.dependencies ? Object.keys(packageFile.dependencies) : [])
@@ -26,8 +27,8 @@ export default [
     },
     plugins: [
       babel({
-        configFile: path.join(__dirname, '../babel.config.js'),
         exclude: 'node_modules',
+        babelHelpers: 'runtime',
       }),
       json(),
       resolve({
@@ -35,7 +36,6 @@ export default [
         main: false,
         module: true,
       }),
-      copy({ [path.join(__dirname, 'rollup-index.js')]: 'dist/index.js' }),
     ],
   },
 
@@ -48,8 +48,8 @@ export default [
     },
     plugins: [
       babel({
-        configFile: path.join(__dirname, '../babel.config.js'),
         exclude: 'node_modules',
+        babelHelpers: 'runtime',
       }),
       json(),
       resolve({
