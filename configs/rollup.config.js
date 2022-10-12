@@ -1,10 +1,9 @@
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import copy from 'rollup-plugin-copy';
-import json from 'rollup-plugin-json';
-import namedDirectory from 'rollup-plugin-named-directory';
+import json from '@rollup/plugin-json';
 import path from 'path';
-import replace from 'rollup-plugin-replace';
-import resolve from 'rollup-plugin-node-resolve';
+import replace from '@rollup/plugin-replace';
+import resolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 
 const rootPath = process.cwd();
@@ -36,9 +35,6 @@ export default [
         main: false,
         module: true,
       }),
-      namedDirectory({
-        matchers: ['<dir>/index.js', '<dir>/index.jsx', '<dir>/<dir>.js', '<dir>/<dir>.jsx'],
-      }),
       copy({ [path.join(__dirname, 'rollup-index.js')]: 'dist/index.js' }),
     ],
   },
@@ -61,10 +57,10 @@ export default [
         main: false,
         module: true,
       }),
-      namedDirectory({
-        matchers: ['<dir>/index.js', '<dir>/index.jsx', '<dir>/<dir>.js', '<dir>/<dir>.jsx'],
+      replace({
+        preventAssignment: true,
+        'process.env.NODE_ENV': JSON.stringify('production'),
       }),
-      replace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
       terser(),
     ],
   },
