@@ -2,6 +2,7 @@
   "author": "Thierry Wong and Burnsred",
   "description": "entity-duck",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.js",
   "module": "src/index.js",
   "name": "@burnsred/entity-duck",

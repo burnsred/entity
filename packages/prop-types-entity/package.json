@@ -2,6 +2,7 @@
   "author": "Thierry Wong and Burnsred",
   "description": "prop-types-entity",
   "license": "MIT",
+  "type": "module",
   "main": "src/index.js",
   "module": "src/index.js",
   "name": "@burnsred/prop-types-entity",

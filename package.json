@@ -1,6 +1,7 @@
 {
   "author": "Thierry Wong and Burnsred",
   "license": "MIT",
+  "type": "module",
   "name": "burnsred-entity-library",
   "private": true,
   "repository": "https://github.com/burnsred/burnsred-entity-library.git",
