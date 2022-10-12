@@ -4,13 +4,13 @@
   "name": "burnsred-entity-library",
   "private": true,
   "repository": "https://github.com/burnsred/burnsred-entity-library.git",
-  "version": "v0.6.2",
+  "version": "0.6.2",
   "workspaces": [
     "packages/*"
   ],
   "engines": {
-    "node": "10.15.3",
-    "npm": "6.4.1"
+    "node": "16.16.0",
+    "npm": "8.11.0"
   },
   "jestWebpackResolver": {
     "silent": true,
