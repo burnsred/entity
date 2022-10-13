@@ -27,7 +27,7 @@ exports[`renders correctly 1`] = `
   className="c0"
 >
   <i
-    className="material-icons sc-gzVnrw ibZhkv c1"
+    className="material-icons Boolean___StyledUIIcon-sc-pub2sw-1 chzaiP c1"
     name="check_box_outline_blank"
   >
     check_box_outline_blank
