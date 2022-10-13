@@ -34,7 +34,7 @@ export default [
     },
     plugins: [
       babel({
-        configFile: path.resolve(__dirname, '../babel.config.js'),
+        configFile: path.resolve(__dirname, '../babel.config.json'),
         exclude: 'node_modules',
         babelHelpers: 'runtime',
       }),
@@ -56,7 +56,7 @@ export default [
     },
     plugins: [
       babel({
-        configFile: path.resolve(__dirname, '../babel.config.js'),
+        configFile: path.resolve(__dirname, '../babel.config.json'),
         exclude: 'node_modules',
         babelHelpers: 'runtime',
       }),
