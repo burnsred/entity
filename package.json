@@ -83,7 +83,6 @@
     "jest-prop-type-error": "1.1.0",
     "jest-styled-components": "7.1.1",
     "lerna": "3.13.1",
-    "lodash": "4.17.11",
     "react-test-renderer": "16.8.4",
     "rimraf": "2.6.3",
     "rollup": "3.1.0",
