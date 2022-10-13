@@ -1,2 +1,2 @@
-# source files
-src/
+test
+*.stories.*
