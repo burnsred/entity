@@ -21,6 +21,7 @@
     "prebuild": "npm run destroy"
   },
   "dependencies": {
+    "@babel/runtime-corejs3": "^7.19.4",
     "@burnsred/prop-types-entity": "0.6.2",
     "@burnsred/prop-types-plus": "0.6.2",
     "@burnsred/ui": "0.6.2",
