@@ -3,8 +3,6 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'airbnb',
-    //'plugin:@typescript-eslint/recommended',
-    //'airbnb-typescript',
     'plugin:eslint-comments/recommended',
     'plugin:jest/recommended',
     'plugin:promise/recommended',
@@ -35,7 +33,6 @@ module.exports = {
     'react-hooks',
     'import',
     'jsx-a11y',
-    //'@typescript-eslint',
     'eslint-comments',
     'jest',
     'promise',
@@ -146,12 +143,6 @@ module.exports = {
         ],
       },
     }],
-
-    '@typescript-eslint/camelcase': 'off',
-
-    '@typescript-eslint/indent': ['error', 2],
-
-    '@typescript-eslint/no-var-requires': 'off',
 
     'unicorn/filename-case': 'off',
 

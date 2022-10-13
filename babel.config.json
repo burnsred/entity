@@ -5,8 +5,7 @@
       "shippedProposals": true,
       "corejs": "3.25"
     }],
-    "@babel/preset-react",
-    "@babel/preset-typescript"
+    "@babel/preset-react"
   ],
   "plugins": [
     ["@babel/plugin-transform-runtime", { "corejs": 3 }],
