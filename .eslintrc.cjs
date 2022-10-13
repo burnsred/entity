@@ -1,11 +1,10 @@
-const DirectoryNamedPlugin = require('directory-named-webpack-plugin');
 
 module.exports = {
   extends: [
     'eslint:recommended',
     'airbnb',
-    'plugin:@typescript-eslint/recommended',
-    'airbnb-typescript',
+    //'plugin:@typescript-eslint/recommended',
+    //'airbnb-typescript',
     'plugin:eslint-comments/recommended',
     'plugin:jest/recommended',
     'plugin:promise/recommended',
@@ -20,7 +19,7 @@ module.exports = {
     commonjs: true,
   },
 
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 
   parserOptions: {
     ecmaVersion: 7,
@@ -36,7 +35,7 @@ module.exports = {
     'react-hooks',
     'import',
     'jsx-a11y',
-    '@typescript-eslint',
+    //'@typescript-eslint',
     'eslint-comments',
     'jest',
     'promise',
@@ -167,11 +166,7 @@ module.exports = {
       webpack: {
         config: {
           resolve: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx'],
-
-            plugins: [
-              new DirectoryNamedPlugin(true),
-            ],
+            extensions: ['.js', '.jsx',],
           },
         },
       },
