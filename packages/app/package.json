@@ -4,8 +4,8 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "import": "./src/index.js",
-    "require": "./dist/index.js"
+    "./package.json": "./package.json",
+    ".": "./src/index.js"
   },
   "name": "@burnsred/app",
   "private": false,
