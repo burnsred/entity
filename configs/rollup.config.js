@@ -19,7 +19,7 @@ const __dirname = fileURLToPath(new URL('.', import.meta.url));
 const rootPath = process.cwd();
 
 const packageFile = require(path.join(rootPath, 'package.json'));
-const dependencies = []
+const dependencies = [/@babel\/runtime-corejs3/]
   .concat(packageFile.dependencies ? Object.keys(packageFile.dependencies) : [])
   .concat(packageFile.devDependencies ? Object.keys(packageFile.devDependencies) : [])
   .concat(packageFile.peerDependencies ? Object.keys(packageFile.peerDependencies) : []);
@@ -41,7 +41,9 @@ export default [
       }),
       commonjs(),
       json(),
-      resolve(),
+      resolve({
+        extensions: ['.js', '.jsx', '.json'],
+      }),
     ],
   },
 
@@ -60,7 +62,9 @@ export default [
       }),
       commonjs(),
       json(),
-      resolve(),
+      resolve({
+        extensions: ['.js', '.jsx', '.json'],
+      }),
       replace({
         preventAssignment: true,
         'process.env.NODE_ENV': JSON.stringify('production'),
