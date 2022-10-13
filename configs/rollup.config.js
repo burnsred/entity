@@ -1,5 +1,5 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 import babel from '@rollup/plugin-babel';
 import commonjs from '@rollup/plugin-commonjs';
@@ -10,6 +10,7 @@ import { terser } from 'rollup-plugin-terser';
 
 // ES does not provide require
 import { createRequire } from 'node:module';
+
 const require = createRequire(import.meta.url);
 
 // ES does not provide __dirname
