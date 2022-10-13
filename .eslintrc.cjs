@@ -1,15 +1,13 @@
-const DirectoryNamedPlugin = require('directory-named-webpack-plugin');
 
 module.exports = {
   extends: [
     'eslint:recommended',
     'airbnb',
-    'plugin:@typescript-eslint/recommended',
-    'airbnb-typescript',
     'plugin:eslint-comments/recommended',
     'plugin:jest/recommended',
     'plugin:promise/recommended',
     'plugin:unicorn/recommended',
+    'plugin:jsdoc/recommended',
   ],
 
   env: {
@@ -20,7 +18,7 @@ module.exports = {
     commonjs: true,
   },
 
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
 
   parserOptions: {
     ecmaVersion: 7,
@@ -36,14 +34,16 @@ module.exports = {
     'react-hooks',
     'import',
     'jsx-a11y',
-    '@typescript-eslint',
     'eslint-comments',
     'jest',
     'promise',
     'unicorn',
+    'jsdoc',
   ],
 
   rules: {
+    'arrow-parens': ['warn', 'as-needed'],
+
     // disable camelcase
     camelcase: 0,
 
@@ -69,6 +69,11 @@ module.exports = {
     ],
 
     'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
+
+    // [cjm] We should turn these on once things improve.
+    'jsdoc/require-returns-description': 0,
+    'jsdoc/require-param-description': 0,
+    'jsdoc/tag-lines': ['warn', 'always', { count: 0 }],
 
     'jsx-a11y/label-has-for': [
       'error',
@@ -148,35 +153,19 @@ module.exports = {
       },
     }],
 
-    '@typescript-eslint/camelcase': 'off',
-
-    '@typescript-eslint/indent': ['error', 2],
-
-    '@typescript-eslint/no-var-requires': 'off',
-
     'unicorn/filename-case': 'off',
 
     'unicorn/new-for-builtins': 'off',
 
+    'unicorn/no-array-reduce': 'warn',
+
     'unicorn/prefer-node-append': 'off',
 
     'unicorn/prefer-query-selector': 'off',
+
+    'unicorn/prevent-abbreviations': 'off',
   },
   settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            extensions: ['.js', '.jsx', '.ts', '.tsx'],
-
-            plugins: [
-              new DirectoryNamedPlugin(true),
-            ],
-          },
-        },
-      },
-    },
-
     react: {
       pragma: 'React',
       version: '16.8.4',
