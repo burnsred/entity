@@ -1,5 +1,5 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 // ES does not provide __dirname
 const __dirname = fileURLToPath(new URL('.', import.meta.url));
