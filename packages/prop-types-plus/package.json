@@ -4,9 +4,10 @@
   "license": "MIT",
   "type": "module",
   "exports": {
-    "import": "./src/index.js",
-    "require": "./dist/index.js"
+    "./package.json": "./package.json",
+    ".": "./src/index.js"
   },
+  "files": ["src"],
   "name": "@burnsred/prop-types-plus",
   "private": false,
   "repository": "https://github.com/burnsred/burnsred-entity-library.git",

@@ -78,7 +78,6 @@
     "jest-environment-jsdom": "^29.1.2",
     "jest-prop-type-error": "1.1.0",
     "jest-styled-components": "7.1.1",
-    "jest-workspace-resolver": "^1.0.0",
     "lerna": "3.13.1",
     "react-test-renderer": "16.8.4",
     "rimraf": "2.6.3",
