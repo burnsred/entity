@@ -153,16 +153,6 @@ module.exports = {
     'unicorn/prefer-query-selector': 'off',
   },
   settings: {
-    'import/resolver': {
-      webpack: {
-        config: {
-          resolve: {
-            extensions: ['.js', '.jsx',],
-          },
-        },
-      },
-    },
-
     react: {
       pragma: 'React',
       version: '16.8.4',
