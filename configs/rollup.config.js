@@ -1,13 +1,20 @@
+import path from 'path';
+import { fileURLToPath } from 'url';
+
 import babel from '@rollup/plugin-babel';
 import json from '@rollup/plugin-json';
-import path from 'path';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
 import { terser } from 'rollup-plugin-terser';
 
+// ES does not provide require
 import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 
+// ES does not provide __dirname
+const __dirname = fileURLToPath(new URL('.', import.meta.url));
+
+// Dir of current package, not this config file
 const rootPath = process.cwd();
 
 const packageFile = require(path.join(rootPath, 'package.json'));
@@ -27,6 +34,7 @@ export default [
     },
     plugins: [
       babel({
+        configFile: path.resolve(__dirname, '../babel.config.js'),
         exclude: 'node_modules',
         babelHelpers: 'runtime',
       }),
@@ -48,6 +56,7 @@ export default [
     },
     plugins: [
       babel({
+        configFile: path.resolve(__dirname, '../babel.config.js'),
         exclude: 'node_modules',
         babelHelpers: 'runtime',
       }),
