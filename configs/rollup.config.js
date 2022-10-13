@@ -2,6 +2,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import babel from '@rollup/plugin-babel';
+import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import replace from '@rollup/plugin-replace';
 import resolve from '@rollup/plugin-node-resolve';
@@ -28,7 +29,7 @@ export default [
     external: dependencies,
     input: path.join(rootPath, 'src/index.js'),
     output: {
-      file: path.join(rootPath, 'dist/development.js'),
+      file: path.join(rootPath, 'dist/index.js'),
       format: 'es',
       sourcemap: true,
     },
@@ -38,12 +39,9 @@ export default [
         exclude: 'node_modules',
         babelHelpers: 'runtime',
       }),
+      commonjs(),
       json(),
-      resolve({
-        extensions: ['.jsx', '.json', '.ts', '.tsx'],
-        main: false,
-        module: true,
-      }),
+      resolve(),
     ],
   },
 
@@ -51,7 +49,7 @@ export default [
     external: dependencies,
     input: path.join(rootPath, 'src/index.js'),
     output: {
-      file: path.join(rootPath, 'dist/production.min.js'),
+      file: path.join(rootPath, 'dist/index.min.js'),
       format: 'es',
     },
     plugins: [
@@ -60,12 +58,9 @@ export default [
         exclude: 'node_modules',
         babelHelpers: 'runtime',
       }),
+      commonjs(),
       json(),
-      resolve({
-        extensions: ['.jsx', '.json', '.ts', '.tsx'],
-        main: false,
-        module: true,
-      }),
+      resolve(),
       replace({
         preventAssignment: true,
         'process.env.NODE_ENV': JSON.stringify('production'),
