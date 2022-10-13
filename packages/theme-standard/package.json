@@ -3,8 +3,10 @@
   "description": "theme",
   "license": "MIT",
   "type": "module",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "exports": {
+    "import": "./src/index.js",
+    "require": "./dist/index.js"
+  },
   "name": "@burnsred/theme-standard",
   "private": false,
   "repository": "https://github.com/burnsred/burnsred-entity-library.git",
@@ -16,12 +18,6 @@
   "scripts": {
     "build": "rollup -c=../../configs/rollup.config.js",
     "destroy": "rimraf dist",
-    "link-main:dist": "json -I -f package.json -e 'this.main=\"dist/index.js\"'",
-    "link-main:src": "json -I -f package.json -e 'this.main=\"src/index.js\"'",
-    "link-module:dist": "json -I -f package.json -e 'this.module=\"dist/index.js\"'",
-    "link-module:src": "json -I -f package.json -e 'this.module=\"src/index.js\"'",
-    "postbuild": "npm run link-main:dist && npm run link-module:dist",
-    "postdestroy": "npm run link-main:src && npm run link-module:src",
     "prebuild": "npm run destroy"
   },
   "dependencies": {
