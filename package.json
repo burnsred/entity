@@ -28,10 +28,6 @@
     "lint:js": "eslint .",
     "packages-build": "lerna run --scope '@burnsred/*' build",
     "packages-destroy": "lerna run --scope '@burnsred/*' destroy",
-    "packages-link-main:dist": "lerna run --scope '@burnsred/*' link-main:dist",
-    "packages-link-main:src": "lerna run --scope '@burnsred/*' link-main:src",
-    "packages-link-module:dist": "lerna run --scope '@burnsred/*' link-module:dist",
-    "packages-link-module:src": "lerna run --scope '@burnsred/*' link-module:src",
     "packages-publish": "./scripts/publish.sh",
     "test": "jest --config configs/jest.config.js",
     "yarn": "yarn"
@@ -82,6 +78,7 @@
     "jest-environment-jsdom": "^29.1.2",
     "jest-prop-type-error": "1.1.0",
     "jest-styled-components": "7.1.1",
+    "jest-workspace-resolver": "^1.0.0",
     "lerna": "3.13.1",
     "react-test-renderer": "16.8.4",
     "rimraf": "2.6.3",
