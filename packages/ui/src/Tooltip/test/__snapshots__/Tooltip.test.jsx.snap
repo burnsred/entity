@@ -9,6 +9,11 @@ exports[`renders correctly 1`] = `
   font-size: 1rem;
 }
 
+.c0 {
+  display: inline-block;
+  position: relative;
+}
+
 .c2 {
   background-color: white;
   border: 1px solid black;
@@ -22,16 +27,11 @@ exports[`renders correctly 1`] = `
   transform: translateY(-100%);
 }
 
-.c0 {
-  display: inline-block;
-  position: relative;
-}
-
 <div
-  className="c0"
+  className="c0 "
 >
   <i
-    className="icon icon-apple c1"
+    className="c1 icon icon-apple"
     name="apple"
     onClick={[Function]}
   />

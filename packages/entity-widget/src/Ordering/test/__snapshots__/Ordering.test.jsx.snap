@@ -14,7 +14,7 @@ exports[`renders correctly 1`] = `
 >
   test
   <i
-    className="material-icons Ordering___StyledUIIcon-sc-lz503s-1 jWfwXK c0"
+    className="c0 material-icons "
     name="unfold_more"
   >
     unfold_more

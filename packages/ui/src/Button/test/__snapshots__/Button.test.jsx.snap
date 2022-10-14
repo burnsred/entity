@@ -63,12 +63,12 @@ exports[`renders correctly 1`] = `
   content="Test"
 >
   <i
-    className="uiButton-Icon icon icon-name uiButton-Icon c1"
+    className="c1 uiButton-Icon icon icon-name uiButton-Icon"
     hidden={true}
     name="name"
   />
   <span
-    className="uiButton-Content c2"
+    className="c2 uiButton-Content"
   >
     Test
   </span>

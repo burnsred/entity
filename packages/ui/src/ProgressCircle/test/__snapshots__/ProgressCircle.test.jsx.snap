@@ -2,8 +2,8 @@
 
 exports[`renders correctly 1`] = `
 .c2 {
-  -webkit-animation-name: bvvTNa;
-  animation-name: bvvTNa;
+  -webkit-animation-name: kVPsOR;
+  animation-name: kVPsOR;
   fill: transparent;
   stroke: black;
   stroke-dasharray: 251.32741228718345px;
@@ -26,6 +26,13 @@ exports[`renders correctly 1`] = `
   transition-property: stroke;
 }
 
+.c0 {
+  display: inline-block;
+  height: 32px;
+  position: relative;
+  width: 32px;
+}
+
 .c1 {
   height: 100%;
   left: 0;
@@ -39,19 +46,12 @@ exports[`renders correctly 1`] = `
   -ms-transform-origin: center;
   transform-origin: center;
   width: 100%;
-  -webkit-animation: eXzyYY 2s linear infinite;
-  animation: eXzyYY 2s linear infinite;
-}
-
-.c0 {
-  display: inline-block;
-  height: 32px;
-  position: relative;
-  width: 32px;
+  -webkit-animation: eTONzd 2s linear infinite;
+  animation: eTONzd 2s linear infinite;
 }
 
 <div
-  className="c0"
+  className="c0 "
   size="32px"
   value={null}
 >
