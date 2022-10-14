@@ -55,8 +55,8 @@ exports[`renders correctly 1`] = `
   -webkit-transform: scaleX(0);
   -ms-transform: scaleX(0);
   transform: scaleX(0);
-  -webkit-animation: jSYKOo 2s infinite linear;
-  animation: jSYKOo 2s infinite linear;
+  -webkit-animation: kpydOR 2s infinite linear;
+  animation: kpydOR 2s infinite linear;
   left: -145.166611%;
   -webkit-transition: none;
   transition: none;
@@ -68,13 +68,13 @@ exports[`renders correctly 1`] = `
   height: 100%;
   position: absolute;
   width: 100%;
-  -webkit-animation: hvVyfP 2s infinite linear;
-  animation: hvVyfP 2s infinite linear;
+  -webkit-animation: cYzErr 2s infinite linear;
+  animation: cYzErr 2s infinite linear;
 }
 
 .c5 {
-  -webkit-animation: hgPsqz 2s infinite linear;
-  animation: hgPsqz 2s infinite linear;
+  -webkit-animation: iSwBzm 2s infinite linear;
+  animation: iSwBzm 2s infinite linear;
   height: 100%;
   left: -54.888891%;
   position: absolute;
@@ -88,8 +88,8 @@ exports[`renders correctly 1`] = `
 }
 
 .c6 {
-  -webkit-animation: dkIHsc 2s infinite linear;
-  animation: dkIHsc 2s infinite linear;
+  -webkit-animation: koCXQN 2s infinite linear;
+  animation: koCXQN 2s infinite linear;
   background-color: black;
   display: inline-block;
   height: 100%;

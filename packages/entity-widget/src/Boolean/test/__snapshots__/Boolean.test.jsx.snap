@@ -24,10 +24,10 @@ exports[`renders correctly 1`] = `
 }
 
 <div
-  className="c0"
+  className="c0 "
 >
   <i
-    className="material-icons Boolean___StyledUIIcon-sc-pub2sw-1 chzaiP c1"
+    className="c1 material-icons "
     name="check_box_outline_blank"
   >
     check_box_outline_blank
