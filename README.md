@@ -1,51 +1,48 @@
-## Getting started
+# Getting started
 
-### Project setup
+Each separate workspace in `packages/` produces raw ESM code.
+There is no bundling done, as it is left as an exercise to the consumer.
 
-Make sure to use node v10.15.1 and npm v6.4.1 or above
+
+## Consumer project requirements
+
+As part of the codebase currently uses the non-standard import syntax:
+
+```
+export default from './Foo';
+```
+
+You will need babel and the `@babel/plugin-proposal-export-default-from` plugin.
+
+This can be added to your `plugins` list with no additional configurations.
+
+## Project setup
+
+Make sure to use node v16.16 and npm v8 or above
 
 Install project dependencies:
 
 ```
-npx yarn install
-```
-
-#### Run development server
-
-```
-npm start
+npm install
 ```
 
 #### Run linters
 
+This will run both CSS and JS linters:
 ```
 npm run lint
 ```
 
-#### Create production build
+Each can be run independently:
 
 ```
-npm run build
+npm run lint:js
+npm run lint:css
 ```
 
-#### Serve dist directory
-
-```
-npm run serve-dist
-```
 
 #### Run tests
 
 ```
 npm test
 ```
-
-### Run storybook
-
-```
-npm run storybook
-```
-
-### Storybook
-
-An example of stories is found at `.storybook/stories.jsx`
