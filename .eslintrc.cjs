@@ -7,6 +7,7 @@ module.exports = {
     'plugin:jest/recommended',
     'plugin:promise/recommended',
     'plugin:unicorn/recommended',
+    'plugin:jsdoc/recommended',
   ],
 
   env: {
@@ -37,6 +38,7 @@ module.exports = {
     'jest',
     'promise',
     'unicorn',
+    'jsdoc',
   ],
 
   rules: {
