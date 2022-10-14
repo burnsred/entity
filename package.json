@@ -14,8 +14,6 @@
     "npm": "8.11.0"
   },
   "scripts": {
-    "check": "npm run check:types",
-    "check:types": "tsc",
     "clean": "lerna clean",
     "coveralls": "jest --config configs/jest.config.js --coverage --collectCoverageFrom=packages/**/*.{js,jsx} --collectCoverageFrom=!packages/**/*stories.{js,jsx} --maxWorkers=2 && cat ./coverage/lcov.info | coveralls",
     "deploy": "./scripts/deploy-ghpages.sh",
