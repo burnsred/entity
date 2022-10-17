@@ -68,6 +68,11 @@ module.exports = {
 
     'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
 
+    // Prefer one line before @returns after @param
+    'jsdoc/tag-lines': ['warn', 'never', {
+      tags: { returns: {lines: 1} }
+    }],
+
     'jsx-a11y/label-has-for': [
       'error',
       {
