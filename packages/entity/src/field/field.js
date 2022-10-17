@@ -1,9 +1,23 @@
-import _ from 'lodash';
 import { fromJS, isImmutable, List, Map } from 'immutable';
 
 import isRequired from '../validator/is-required';
 
+/**
+ * Field base class for Entity classes
+ */
 export default class Field {
+  /**
+   *
+   * @param {object} [options]
+   * @param {string} [options.type]
+   * @param {boolean} [options.blank = false]
+   * @param {import('../cleaner').cleanerFunc[]} [options.cleaners = []]
+   * @param {boolean} [options.many = false]
+   * @param {List} [options.options]
+   * @param {function | import('../validator').fieldValidatorFunc[]} [options.validators] - If passed a function,
+   *  will invoke the function, passing the default list of validators, and use
+   *  its result as the list of validators.
+   */
   constructor(options = {}) {
     if (process.env.NODE_ENV !== 'production') {
       if (options.options && !List.isList(options.options)) throw new Error(`Field.constructor (${this.constructor.name}): options.options must be a an immutable List`);
@@ -22,13 +36,23 @@ export default class Field {
       defaults,
       options,
       {
-        validators: _.isFunction(options.validators)
+        validators: (options.validators instanceof Function)
           ? options.validators(defaults.validators)
           : (options.validators || defaults.validators),
       },
     );
   }
 
+  /**
+   * Apply our configured cleaner functions to an Entity.
+   *
+   * Sets `configs.field` to this field when calling cleaners.
+   *
+   * @param {Entity} record
+   * @param {object} [configs]
+   *
+   * @returns {Entity}
+   */
   clean(record, configs = {}) {
     const newOptions = { ...configs, field: this };
 
@@ -38,10 +62,20 @@ export default class Field {
     );
   }
 
+  /**
+   * @param {Any} data
+   *
+   * @returns {Any}
+   */
   dataToValue(data) {
     return fromJS(data);
   }
 
+  /**
+   * Get the default value for this field.
+   *
+   * @returns {List | null}
+   */
   default() {
     return this.many ? List() : null;
   }
@@ -64,6 +98,13 @@ export default class Field {
       .flatMap(error => error.getIn(['errors', options.index]));
   }
 
+  /**
+   * For compatibility with ?? interface.
+   *
+   * @param {object} [options]
+   *
+   * @returns {Field} this
+   */
   getField(options = {}) {
     if (process.env.NODE_ENV !== 'production') {
       if (options.name) throw new Error(`Field.getField (${this.constructor.name}): method with option name is not supported.`);
@@ -94,6 +135,17 @@ export default class Field {
     return options.name ? null : value;
   }
 
+  /**
+   * Test if this value is considered blank.
+   *
+   * Default implementation considers blank to be `null` for single values
+   * fields, or empty-list for multi.
+   *
+   * @param {Any} value
+   * @param {object} [options]
+   *
+   * @returns {boolean}
+   */
   isBlank(value = null, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
       if (options.name) throw new Error(`Field.isBlank (${this.constructor.name}): method with option name is not supported.`);
@@ -112,6 +164,13 @@ export default class Field {
       : value;
   }
 
+  /**
+   * Convert this value to a querystring appropriate format.
+   *
+   * @param {Any} value
+   *
+   * @returns {string}
+   */
   toParams(value) {
     return (value && value.toString()) || '';
   }
@@ -122,12 +181,20 @@ export default class Field {
       : value.toString();
   }
 
+  /**
+   * Apply configured validators
+   *
+   * @param {Any} value
+   * @param {object} [options]
+   *
+   * @returns {ErrorMap[]}
+   */
   validate(value, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
       if (this.many && !List.isList(value)) throw new Error(`Field.validate (${this.constructor.name}-${options.fieldName}): "value" must be an "Immutable List" with field option "many"`);
     }
 
-    const validators = _.isFunction(options.validators)
+    const validators = (options.validators instanceof Function)
       ? options.validators(this.validators)
       : (options.validators || this.validators);
 

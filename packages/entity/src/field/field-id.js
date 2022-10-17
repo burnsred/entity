@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import idx from 'idx';
 import AnyField from './field-any';
 
@@ -12,7 +11,7 @@ export default class IdField extends AnyField {
   }
 
   dataToValue(data) {
-    return _.isFunction(idx(data, x => x.toString))
+    return (idx(data, x => x.toString) instanceof Function)
       ? data.toString()
       : data;
   }

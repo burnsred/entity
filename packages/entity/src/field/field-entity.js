@@ -21,7 +21,7 @@ export default class EntityField extends AnyField {
       configs,
       {
         validators: defaultValidators => (
-          _.isFunction(configs.validators)
+          (configs.validators instanceof Function)
             ? configs.validators(defaultValidators.concat(entityValidators))
             : configs.validators || defaultValidators.concat(entityValidators)
         ),

@@ -4,6 +4,9 @@ import BooleanField from '../field/field-boolean';
 import CharField from '../field/field-char';
 import EntityField from '../field/field-entity';
 
+/**
+ * Pre-defined Entity type for common Enumerated types.
+ */
 export default class Enum extends Entity {
   static idField = 'value'
 
