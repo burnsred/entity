@@ -70,7 +70,7 @@ module.exports = {
 
     // Prefer one line before @returns after @param
     'jsdoc/tag-lines': ['warn', 'never', {
-      tags: { returns: {lines: 1} }
+      tags: { returns: { count: 1 } },
     }],
 
     'jsx-a11y/label-has-for': [
@@ -158,6 +158,8 @@ module.exports = {
     'unicorn/prefer-node-append': 'off',
 
     'unicorn/prefer-query-selector': 'off',
+
+    'unicorn/prevent-abbreviations': 'off',
   },
   settings: {
     react: {
