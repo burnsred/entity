@@ -10,6 +10,7 @@ import IdField from '../field/field-id';
  * ErrorMaps always contain the same 3 keys:
  * detail: {boolean}
  * message: {string}
+ * list: {boolean} - indicates errors are over a list of values
  * errors: {List | ErrorMap}
  */
 
@@ -42,13 +43,13 @@ export default class Entity {
   static paths = {};
 
   /**
-   * Remove a record from a list of records
+   * Remove an Entity from a list of Entities
    *
-   * @param {List<Record>} records
+   * @param {List<Entity>} records
    * @param {object} options
    * @param {number} options.index
    *
-   * @returns {List<Record>}
+   * @returns {List<Entity>}
    */
   static actionArrayDeleteAtIndex(records, { index = null } = {}) {
     if (process.env.NODE_ENV !== 'production') {
@@ -60,7 +61,7 @@ export default class Entity {
   }
 
   /**
-   * Reposition a record in a list of records.
+   * Reposition an Entity in a list of Entities.
    *
    * @param {List<Record>} records
    * @param {object} options

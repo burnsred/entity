@@ -42,6 +42,8 @@ module.exports = {
   ],
 
   rules: {
+    'arrow-parens': ['warn', 'as-needed'],
+
     // disable camelcase
     camelcase: 0,
 
@@ -68,9 +70,9 @@ module.exports = {
 
     'import/no-unresolved': ['error', { commonjs: true, caseSensitive: true }],
 
-    // Prefer one line before @returns after @param
+    // Require one line before @returns after @param
     'jsdoc/tag-lines': ['warn', 'never', {
-      tags: { returns: { count: 1 } },
+      tags: { returns: { lines: 'always', count: 1 } },
     }],
 
     'jsx-a11y/label-has-for': [
@@ -154,6 +156,8 @@ module.exports = {
     'unicorn/filename-case': 'off',
 
     'unicorn/new-for-builtins': 'off',
+
+    'unicorn/no-array-reduce': 'warn',
 
     'unicorn/prefer-node-append': 'off',
 

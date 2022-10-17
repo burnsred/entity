@@ -5,6 +5,9 @@ import Entity from './entity';
 import IdField from '../field/field-id';
 import IntegerField from '../field/field-integer';
 
+/**
+ * Base Entity for pagination state.
+ */
 export default class Filter extends Entity {
   static fields = {
     page: new IntegerField({ default: 1 }),
@@ -12,7 +15,16 @@ export default class Filter extends Entity {
     uuid: new IdField({ blank: true, mock: 'random.uuid' }),
   }
 
-  // NOTE(thierry): returning a map from field.toParams will flatten the output
+  /**
+   * Convert this record into params suitable for passing to the back end.
+   *
+   * NOTE(thierry): returning a map from field.toParams will flatten the output
+   *
+   * @param {Entity} record
+   * @param {object} [options]
+   *
+   * @returns {Map}
+   */
   static toParams(record, options = {}) {
     const fieldValueToParams = (value, key) => (
       List.isList(value)
