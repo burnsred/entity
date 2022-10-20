@@ -4,9 +4,9 @@ import { List, Map } from 'immutable';
  * Validator factory to produce a validator which applies the supplied list of
  * validators to each item in the values list.
  *
- * @param {import('.').fieldValidatorFunc[]} validators
+ * @param {import('../validator').Validator[]} validators
  *
- * @returns {import('.').fieldValidatorFunc}
+ * @returns {import('../validator').Validator}
  */
 export default validators => (values, configs) => {
   if (process.env.NODE_ENV !== 'production') {

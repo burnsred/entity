@@ -3,10 +3,14 @@
  */
 
 /**
- * @callback cleanerFunc
- * @param {Any} value
- * @param {object} options
- * @param {Field} options.field - the invoking field
+ * @typedef CleanerOptions
+ * @property {import("../field").Field} [field] - the invoking field
+ */
+
+/**
+ * @callback Cleaner
+ * @param {any} value
+ * @param {CleanerOptions} options
  */
 
 export { default as removeMultiSpace } from './remove-multi-space';

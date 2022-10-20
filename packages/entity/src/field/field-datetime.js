@@ -1,11 +1,21 @@
 import DateField from './field-date';
 
 export default class DateTimeField extends DateField {
-  constructor(configs = {}) {
+  /**
+   *
+   * @param {import('./field-date').DateFieldOptions} configs
+   */
+  constructor({
+    dateFormat = 'YYYY-MM-DD HH:mm',
+    allowTime = true,
+    ...configs
+  }) {
     super({
-      dateFormat: 'YYYY-MM-DD HH:mm',
-      allowTime: true,
+      type: 'datetime',
       ...configs,
     });
+
+    this.dateFormat = dateFormat;
+    this.allowTime = allowTime;
   }
 }
