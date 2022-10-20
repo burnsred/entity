@@ -13,17 +13,17 @@ export default class Filter extends Entity {
     page: new IntegerField({ default: 1 }),
     page_size: new IntegerField({ default: 20 }),
     uuid: new IdField({ blank: true, mock: 'random.uuid' }),
-  }
+  };
 
   /**
    * Convert this record into params suitable for passing to the back end.
    *
    * NOTE(thierry): returning a map from field.toParams will flatten the output
    *
-   * @param {Entity} record
+   * @param {import('..').Record} record
    * @param {object} [options]
    *
-   * @returns {Map}
+   * @returns {import('..').Record}
    */
   static toParams(record, options = {}) {
     const fieldValueToParams = (value, key) => (

@@ -5,16 +5,6 @@ import EntityField from '../field/field-entity';
 import IdField from '../field/field-id';
 
 /**
- * @typedef ErrorMap
- *
- * ErrorMaps always contain the same 3 keys:
- * detail: {boolean}
- * message: {string}
- * list: {boolean} - indicates errors are over a list of values
- * errors: {List | ErrorMap}
- */
-
-/**
  * Entity class
  *
  * Defines an entity, its fields, cleaners, etc.
@@ -22,6 +12,8 @@ import IdField from '../field/field-id';
 export default class Entity {
   /**
    * A list of cleaner functions
+   *
+   * @type {import('../cleaner').Cleaner[]}
    */
   static cleaners = [];
 
@@ -32,6 +24,8 @@ export default class Entity {
 
   /**
    * A map of name => Field instances
+   *
+   * @type {{[index: string]: import("../field").Field}}
    */
   static fields = {
     uuid: new IdField({ blank: true, mock: 'random.uuid' }),
@@ -39,42 +33,44 @@ export default class Entity {
 
   /**
    * A map of well known names to URL paths for operating with this Entity on the server.
+   *
+   * @type {{[index: string]: string}}
    */
   static paths = {};
 
   /**
    * Remove an Entity from a list of Entities
    *
-   * @param {List<Entity>} records
+   * @param {List<import('..').Record>} records
    * @param {object} options
    * @param {number} options.index
    *
-   * @returns {List<Entity>}
+   * @returns {List<import('..').Record>}
    */
-  static actionArrayDeleteAtIndex(records, { index = null } = {}) {
+  static actionArrayDeleteAtIndex(records, { index }) {
     if (process.env.NODE_ENV !== 'production') {
       if (!List.isList(records)) throw new Error(`Entity.actionArrayDeleteAt (${this.name}): "records" must be an immutable List.`);
-      if (index === null) throw new Error(`Entity.actionArrayDeleteAt (${this.name}): "index" option must be set.`);
+      if (index === undefined) throw new Error(`Entity.actionArrayDeleteAt (${this.name}): "index" option must be set.`);
     }
 
     return records.delete(index);
   }
 
   /**
-   * Reposition an Entity in a list of Entities.
+   * Reposition an Map in a list.
    *
-   * @param {List<Record>} records
+   * @param {List<import('..').Record>} records
    * @param {object} options
    * @param {number} options.index - index of record to move
    * @param {number} options.indexTo - index to move it to
    *
-   * @returns {List<Record>}
+   * @returns {List<import('..').Record>}
    */
-  static actionArrayMoveAtIndex(records, { index = null, indexTo = null } = {}) {
+  static actionArrayMoveAtIndex(records, { index, indexTo }) {
     if (process.env.NODE_ENV !== 'production') {
       if (!List.isList(records)) throw new Error(`Entity.actionArrayMoveAtIndex (${this.name}): "records" must be an immutable List.`);
-      if (index === null) throw new Error(`Entity.actionArrayMoveAtIndex (${this.name}): "index" option must be set.`);
-      if (indexTo === null) throw new Error(`Entity.actionArrayMoveAtIndex (${this.name}): "indexTo" option must be set.`);
+      if (index === undefined) throw new Error(`Entity.actionArrayMoveAtIndex (${this.name}): "index" option must be set.`);
+      if (indexTo === undefined) throw new Error(`Entity.actionArrayMoveAtIndex (${this.name}): "indexTo" option must be set.`);
     }
 
     return records.delete(index).insert(indexTo, records.get(index));
@@ -83,14 +79,14 @@ export default class Entity {
   /**
    * Create a new record with all default values
    *
-   * @param {Record} record
+   * @param {import('..').Record} record
    * @param {object} configs
-   * @param {Record} [configs.valueInitial] - supplied new record to use.
+   * @param {import('..').Record} [configs.valueInitial] - supplied new record to use.
    *
-   * @returns {Record}
+   * @returns {import('..').Record}
    */
-  static actionReset(record, configs = {}) {
-    return configs.valueInitial || this.dataToRecord({
+  static actionReset(record, { valueInitial }) {
+    return valueInitial || this.dataToRecord({
       [this.idField]: record.get(this.idField),
     });
   }
@@ -98,10 +94,10 @@ export default class Entity {
   /**
    * Apply all cleaners to the given record.
    *
-   * @param {Record} record
+   * @param {import('..').Record} record
    * @param {object} configs
    *
-   * @returns {Record}
+   * @returns {import('..').Record}
    */
   static clean(record, configs = {}) {
     const newOptions = { ...configs, entity: this };
@@ -113,13 +109,13 @@ export default class Entity {
   }
 
   /**
-   * Factory function to produce a Record for this Entity from supplied data.
+   * Factory function to produce a Map for this Entity from supplied data.
    *
-   * @param {object} data
+   * @param {object} [data]
    *
-   * @returns {Map}
+   * @returns {import('..').Record}
    */
-  static dataToRecord(data = null) {
+  static dataToRecord(data) {
     const fieldDataToValue = (value, key) => (
       (List.isList(value) || Array.isArray(value))
         ? List(value).map(val => this.fields[key].dataToValue(val, { data }))
@@ -147,13 +143,27 @@ export default class Entity {
     return new EntityField({ entity: this, ...configs });
   }
 
-  static getId(record = null) {
+  /**
+   * Get the ID for the given record.
+   *
+   * @param {import('..').Record} record
+   * @param {object} [options]
+   *
+   * @returns {any}
+   */
+  static getId(record, options) {
     return record === null
       ? undefined
       : record.get(this.idField);
   }
 
-  static getPaths() {
+  /**
+   *
+   * @param {object} [options]
+   *
+   * @returns {object}
+   */
+  static getPaths(options) {
     return this.paths;
   }
 
@@ -164,7 +174,7 @@ export default class Entity {
   /**
    * Test if the provided object is an Entity instance
    *
-   * @param {Any} maybeEntity
+   * @param {any} maybeEntity
    *
    * @returns {boolean}
    */
@@ -175,7 +185,7 @@ export default class Entity {
   /**
    * Test if the provided object is an instance of this Entity.
    *
-   * @param {Any} maybeDescendant
+   * @param {any} maybeDescendant
    *
    * @returns {boolean}
    */
@@ -190,7 +200,7 @@ export default class Entity {
   /**
    * Given a Map of error records, do any of them apply to our fields?
    *
-   * @param {Map} errors
+   * @param {import('..').ErrorMap} errors
    * @param {object} [configs]
    *
    * @returns {boolean}
@@ -257,9 +267,10 @@ export default class Entity {
   }
 
   /**
-   * Convert an Entity to its raw data.
+   * Convert a Record to its raw data.
    *
-   * @param {Entity} record
+   * @param {import('..').Record} record
+   *
    * @returns {object}
    */
   static toData(record) {
@@ -289,10 +300,10 @@ export default class Entity {
   /**
    * Apply all per-field validators
    *
-   * @param {Record} record
+   * @param {import('..').Record} record
    * @param {object} [configs]
    *
-   * @returns {Map}
+   * @returns {import('..').Record}
    */
   static validate(record, configs = {}) {
     if (!record) return record;

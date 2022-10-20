@@ -2,14 +2,37 @@ import moment from 'moment';
 
 import AnyField from './field-any';
 
+/**
+ * @typedef {import('.').FieldOptions} FieldOptions
+ */
+
+/**
+ * @typedef {FieldOptions} DateFieldOptions
+ * @property {boolean} [allowTime]
+ * @property {string} [dateFormat]
+ */
+
+/**
+ * @class DateField
+ * @property {boolean} allowTime
+ * @property {string} dateFormat
+ */
 export default class DateField extends AnyField {
-  constructor(configs = {}) {
+  /**
+   * @param {DateFieldOptions} configs
+   */
+  constructor({
+    dateFormat = 'YYYY-MM-DD',
+    allowTime  = false,
+    ...configs
+  }) {
     super({
-      allowTime: false,
-      dateFormat: 'YYYY-MM-DD',
       type: 'date',
       ...configs,
     });
+
+    this.allowTime = allowTime;
+    this.dateFormat = dateFormat;
   }
 
   dataToValue(data) {

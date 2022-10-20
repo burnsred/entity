@@ -4,9 +4,9 @@ import isRequired from './is-required';
  * Validator factory to produce a Validator which requires a value only if the
  * supplied `predicate` is satisfied.
  *
- * @param {import('.').fieldValidatorFunc} predicate
+ * @param {(object) => boolean} predicate
  *
- * @returns {import('.').fieldValidatorFunc}
+ * @returns {import('../validator').Validator}
  */
 export default predicate => (value, configs) => {
   if (process.env.NODE_ENV !== 'production') {

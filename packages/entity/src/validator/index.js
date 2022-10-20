@@ -1,15 +1,10 @@
 /**
  * Validator functions are applied to Field values.
  *
- * They either yield
- */
-
-/**
- * @callback fieldValidatorFunc
+ * @callback Validator
  * @param {any} value
  * @param {object} options
- * @param {import('../field/field').Field} options.field - the invoking field
- * @returns {?string | ?import('../entity/entity').ErrorMap} - error message(s)
+ * @returns {string | import("..").ErrorMap | undefined}
  */
 
 export { default as allowBlank } from './allow-blank';

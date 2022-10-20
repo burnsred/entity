@@ -2,7 +2,7 @@ import idx from 'idx';
 import AnyField from './field-any';
 
 export default class IdField extends AnyField {
-  constructor(configs = {}) {
+  constructor(configs) {
     super(configs);
 
     if (process.env.NODE_ENV !== 'production') {

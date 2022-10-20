@@ -1,7 +1,7 @@
 /**
  * Validator to ensure the value is not blank according to the rules of the field.
  *
- * @type {import(".").fieldValidatorFunc}
+ * @type {import("../validator").Validator}
  */
 export default (value, configs = {}) => {
   if (process.env.NODE_ENV !== 'production') {

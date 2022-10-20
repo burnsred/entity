@@ -1,7 +1,5 @@
 /**
- * Validatory factory to produce a Validator which ...?
- *
- * @param {}
+ * Validator factory to produce a Validator which ...?
  */
 export default validatorOptions => (value, options) => {
   if (process.env.NODE_ENV !== 'production') {
