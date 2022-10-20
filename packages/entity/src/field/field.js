@@ -3,44 +3,50 @@ import { fromJS, isImmutable, List, Map } from 'immutable';
 import isRequired from '../validator/is-required';
 
 /**
- * Field base class for Entity classes
+ * @typedef {import('.').FieldOptions} FieldOptions
+ */
+
+/**
+ * Field base class for Entity Fields
+ *
+ * @class Field
+ * @property {string?} type
+ * @property {boolean} blank
+ * @property {import('../cleaner').Cleaner[]} cleaners
+ * @property {boolean} many
+ * @property {import("immutable").List<any>} options
+ * @property {Function | import("../validator").Validator[]} validators
  */
 export default class Field {
   /**
-   *
-   * @param {object} [options]
-   * @param {string} [options.type]
-   * @param {boolean} [options.blank = false]
-   * @param {import('../cleaner').cleanerFunc[]} [options.cleaners = []]
-   * @param {boolean} [options.many = false]
-   * @param {List} [options.options]
-   * @param {function | import('../validator').fieldValidatorFunc[]} [options.validators] - If passed a function,
-   *  will invoke the function, passing the default list of validators, and use
-   *  its result as the list of validators.
+   * @param {FieldOptions} options
    */
-  constructor(options = {}) {
+  constructor({
+    type,
+    blank = false,
+    cleaners = [],
+    many = false,
+    options,
+    validators,
+    ...extra
+  } = {}) {
     if (process.env.NODE_ENV !== 'production') {
-      if (options.options && !List.isList(options.options)) throw new Error(`Field.constructor (${this.constructor.name}): options.options must be a an immutable List`);
-      if (options.options && options.options.size !== options.options.toSet().size) throw new Error(`Field.constructor (${this.constructor.name}): options.options must have unique items.`);
+      if (options && !List.isList(options)) throw new Error(`Field.constructor (${this.constructor.name}): options.options must be a an immutable List`);
+      if (options && options.size !== options.toSet().size) throw new Error(`Field.constructor (${this.constructor.name}): options.options must have unique items.`);
     }
 
-    const defaults = {
-      blank: false,
-      cleaners: [],
-      many: false,
-      validators: options.blank ? [] : [isRequired],
-    };
+    const defaultValidators = blank ? [] : [isRequired];
 
-    Object.assign(
-      this,
-      defaults,
-      options,
-      {
-        validators: (options.validators instanceof Function)
-          ? options.validators(defaults.validators)
-          : (options.validators || defaults.validators),
-      },
-    );
+    this.type = type;
+    this.blank = blank;
+    this.cleaners = cleaners;
+    this.many = many;
+    this.options = options;
+    this.validators = (validators instanceof Function)
+      ? validators(defaultValidators)
+      : validators || defaultValidators;
+
+    Object.assign(this, extra);
   }
 
   /**
@@ -48,10 +54,10 @@ export default class Field {
    *
    * Sets `configs.field` to this field when calling cleaners.
    *
-   * @param {Entity} record
+   * @param {import('..').Record} record
    * @param {object} [configs]
    *
-   * @returns {Entity}
+   * @returns {import('..').Record}
    */
   clean(record, configs = {}) {
     const newOptions = { ...configs, field: this };
@@ -63,18 +69,19 @@ export default class Field {
   }
 
   /**
-   * @param {Any} data
+   * @param {any} data
+   * @param {object} [configs]
    *
-   * @returns {Any}
+   * @returns {any}
    */
-  dataToValue(data) {
+  dataToValue(data, configs = {}) {
     return fromJS(data);
   }
 
   /**
    * Get the default value for this field.
    *
-   * @returns {List | null}
+   * @returns {List<any> | any}
    */
   default() {
     return this.many ? List() : null;
@@ -141,7 +148,7 @@ export default class Field {
    * Default implementation considers blank to be `null` for single values
    * fields, or empty-list for multi.
    *
-   * @param {Any} value
+   * @param {any} value
    * @param {object} [options]
    *
    * @returns {boolean}
@@ -158,7 +165,14 @@ export default class Field {
     );
   }
 
-  toData(value) {
+  /**
+   * Convert a value to raw data
+   *
+   * @param {import("immutable").Collection} value
+   * @param {object} [options]
+   * @returns {any}
+   */
+  toData(value, options) {
     return isImmutable(value)
       ? value.toJS()
       : value;
@@ -167,7 +181,7 @@ export default class Field {
   /**
    * Convert this value to a querystring appropriate format.
    *
-   * @param {Any} value
+   * @param {any} value
    *
    * @returns {string}
    */
@@ -184,10 +198,10 @@ export default class Field {
   /**
    * Apply configured validators
    *
-   * @param {Any} value
+   * @param {any} value
    * @param {object} [options]
    *
-   * @returns {ErrorMap[]}
+   * @returns {List<import('..').ErrorMap>}
    */
   validate(value, options = {}) {
     if (process.env.NODE_ENV !== 'production') {

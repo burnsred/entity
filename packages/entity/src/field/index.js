@@ -1,3 +1,17 @@
+/**
+ * Common arguments when constructing a Field
+ *
+ * @typedef FieldOptions
+ * @property {string?} [type]
+ * @property {boolean?} [blank = false]
+ * @property {import('../cleaner').Cleaner[]?} [cleaners = []]
+ * @property {boolean?} [many = false]
+ * @property {import("immutable").List?} [options]
+ * @property {function | import("../validator").Validator[]?} [validators] - If passed a function,
+ *  will invoke the function, passing the default list of validators, and use
+ *  its result as the list of validators.
+ */
+
 export { default as Field } from './field';
 
 export { default as AnyField } from './field-any';

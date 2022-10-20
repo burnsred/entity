@@ -25,11 +25,11 @@ export default class Title extends Entity {
     title: new CharField({ mock: 'lorem.sentence' }),
     title_short: new CharField({ blank: true }),
     uuid: new IdField({ blank: true, mock: 'random.uuid' }),
-  }
+  };
 
   static paths = {
     urlBase: '',
-  }
+  };
 
   static actionArchive(record, configs = {}) {
     if (process.env.NODE_ENV !== 'production') {

@@ -5,34 +5,47 @@ import AnyField from './field-any';
 import entityValid from '../validator/entity-valid';
 import list from '../validator/list';
 
+/**
+ * Field for holding a nested Entity
+ *
+ * @class EntityField
+ * @extends AnyField
+ * @property {import('..').Record} entity
+ */
 export default class EntityField extends AnyField {
-  constructor(configs = {}) {
-    const defaults = {
-      nested: true,
-      type: 'entity',
-    };
-
-    const entityValidators = configs.many
+  constructor({
+    entity,
+    nested = true,
+    type = 'entity',
+    ...options
+  }) {
+    const entityValidators = options.many
       ? [list([entityValid])]
       : [entityValid];
 
-    super(Object.assign(
-      defaults,
-      configs,
-      {
-        validators: defaultValidators => (
-          (configs.validators instanceof Function)
-            ? configs.validators(defaultValidators.concat(entityValidators))
-            : configs.validators || defaultValidators.concat(entityValidators)
-        ),
-      },
-    ));
+    super({
+      type,
+      validators: defaultValidators => (
+        (options.validators instanceof Function)
+          ? options.validators(defaultValidators.concat(entityValidators))
+          : options.validators || defaultValidators.concat(entityValidators)
+      ),
+      ...options
+    });
+
+    this.entity = entity;
+    this.nested = nested;
 
     if (process.env.NODE_ENV !== 'production') {
-      if (!configs.entity) throw new Error(`${this.constructor.name}.constructor: "entity" option is required`);
+      if (!options.entity) throw new Error(`${this.constructor.name}.constructor: "entity" option is required`);
     }
   }
 
+  /**
+   * @param {import('..').Record} data
+   *
+   * @returns {any}
+   */
   dataToValue(data) {
     return this.entity.dataToRecord(data);
   }
