@@ -23,14 +23,15 @@
   "dependencies": {
     "@babel/runtime-corejs3": "^7.19.4",
     "idx": "2.5.5",
-    "immutable": "4.0.0-rc.12",
     "query-string": "6.4.0"
   },
   "devDependencies": {
+    "immutable": "4.1.0",
     "lodash": "4.17.11",
     "moment": "2.24.0"
   },
   "peerDependencies": {
+    "immutable": ">=4.1.0",
     "lodash": ">=4.12.0",
     "moment": ">=2.0.0"
   }

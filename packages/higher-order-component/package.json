@@ -22,14 +22,15 @@
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.19.4",
-    "immutable": "4.0.0-rc.12",
     "prop-types": "15.7.2"
   },
   "devDependencies": {
+    "immutable": "4.1.0",
     "lodash": "4.17.11",
     "react": "16.8.4"
   },
   "peerDependencies": {
+    "immutable": ">=4.1.0",
     "lodash": ">=4.12.0",
     "react": ">=16.8.0"
   }
