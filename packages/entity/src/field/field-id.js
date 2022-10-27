@@ -6,6 +6,7 @@ export default class IdField extends AnyField {
     super(configs);
 
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (configs.many) throw new Error(`${this.constructor.name}.constructor: "many" option is not supported.`);
     }
   }

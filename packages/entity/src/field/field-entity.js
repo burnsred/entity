@@ -22,13 +22,14 @@ export default class EntityField extends AnyField {
       {
         validators: defaultValidators => (
           (configs.validators instanceof Function)
-            ? configs.validators(defaultValidators.concat(entityValidators))
-            : configs.validators || defaultValidators.concat(entityValidators)
+            ? configs.validators([...defaultValidators, ...entityValidators])
+            : configs.validators || [...defaultValidators, ...entityValidators]
         ),
       },
     ));
 
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (!configs.entity) throw new Error(`${this.constructor.name}.constructor: "entity" option is required`);
     }
   }
@@ -53,7 +54,7 @@ export default class EntityField extends AnyField {
       ? errors
         .filter(error => Map.isMap(error) && error.get('detail'))
         .flatMap(error => error.getIn(['errors', configs.name]))
-        .filter(error => error)
+        .filter(Boolean)
       : errors;
   }
 

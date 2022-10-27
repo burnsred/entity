@@ -3,6 +3,13 @@ import { fromJS, isImmutable, List, Map } from 'immutable';
 import isRequired from '../validator/is-required';
 
 /**
+ * @typedef {module:entity} Entity
+ * @typedef {module:entity} ErrorMap
+ * @typedef {module:cleaner} cleanerFunc
+ * @typedef {module:validator} fieldValidatorFunc
+ */
+
+/**
  * Field base class for Entity classes
  */
 export default class Field {
@@ -11,10 +18,10 @@ export default class Field {
    * @param {object} [options]
    * @param {string} [options.type]
    * @param {boolean} [options.blank = false]
-   * @param {import('../cleaner').cleanerFunc[]} [options.cleaners = []]
+   * @param {cleanerFunc[]} [options.cleaners = []]
    * @param {boolean} [options.many = false]
    * @param {List} [options.options]
-   * @param {function | import('../validator').fieldValidatorFunc[]} [options.validators] - If passed a function,
+   * @param {Function | fieldValidatorFunc[]} [options.validators] - If passed a function,
    *  will invoke the function, passing the default list of validators, and use
    *  its result as the list of validators.
    */
@@ -63,9 +70,9 @@ export default class Field {
   }
 
   /**
-   * @param {Any} data
+   * @param {any} data
    *
-   * @returns {Any}
+   * @returns {any}
    */
   dataToValue(data) {
     return fromJS(data);
@@ -82,6 +89,7 @@ export default class Field {
 
   getErrors(errors, configs = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (configs.name) throw new Error(`Field.getErrors (${this.constructor.name}): option "name" is not supported.`);
     }
 
@@ -90,6 +98,7 @@ export default class Field {
 
   getErrorsArray(errors, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.index === undefined) throw new Error(`Field.getErrorsArray (${this.constructor.name}): option "index" is required.`);
     }
 
@@ -107,6 +116,7 @@ export default class Field {
    */
   getField(options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.name) throw new Error(`Field.getField (${this.constructor.name}): method with option name is not supported.`);
     }
 
@@ -129,6 +139,7 @@ export default class Field {
 
   getValue(value, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.name) throw new Error(`Field.getValue (${this.constructor.name}): option "name" is not supported.`);
     }
 
@@ -141,13 +152,14 @@ export default class Field {
    * Default implementation considers blank to be `null` for single values
    * fields, or empty-list for multi.
    *
-   * @param {Any} value
+   * @param {any} value
    * @param {object} [options]
    *
    * @returns {boolean}
    */
   isBlank(value = null, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.name) throw new Error(`Field.isBlank (${this.constructor.name}): method with option name is not supported.`);
     }
 
@@ -167,7 +179,7 @@ export default class Field {
   /**
    * Convert this value to a querystring appropriate format.
    *
-   * @param {Any} value
+   * @param {any} value
    *
    * @returns {string}
    */
@@ -184,13 +196,14 @@ export default class Field {
   /**
    * Apply configured validators
    *
-   * @param {Any} value
+   * @param {any} value
    * @param {object} [options]
    *
    * @returns {ErrorMap[]}
    */
   validate(value, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (this.many && !List.isList(value)) throw new Error(`Field.validate (${this.constructor.name}-${options.fieldName}): "value" must be an "Immutable List" with field option "many"`);
     }
 
@@ -200,6 +213,6 @@ export default class Field {
 
     return List(validators)
       .map(validator => validator(value, { ...options, field: this }))
-      .filter(error => error);
+      .filter(Boolean);
   }
 }
