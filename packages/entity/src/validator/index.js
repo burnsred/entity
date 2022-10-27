@@ -1,15 +1,20 @@
 /**
  * Validator functions are applied to Field values.
  *
- * They either yield
+ * @module validator
+ */
+
+/**
+ * @typedef {module:field} Field
+ * @typedef {module:entity} ErrorMap
  */
 
 /**
  * @callback fieldValidatorFunc
  * @param {any} value
  * @param {object} options
- * @param {import('../field/field').Field} options.field - the invoking field
- * @returns {?string | ?import('../entity/entity').ErrorMap} - error message(s)
+ * @param {Field} options.field - the invoking field
+ * @returns {?string | ?ErrorMap} - error message(s)
  */
 
 export { default as allowBlank } from './allow-blank';

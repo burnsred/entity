@@ -1,15 +1,20 @@
 import { List, Map } from 'immutable';
 
 /**
+ * @typedef {module:validator} fieldValidatorFunc
+ */
+
+/**
  * Validator factory to produce a validator which applies the supplied list of
  * validators to each item in the values list.
  *
- * @param {import('.').fieldValidatorFunc[]} validators
+ * @param {fieldValidatorFunc[]} validators
  *
- * @returns {import('.').fieldValidatorFunc}
+ * @returns {fieldValidatorFunc}
  */
 export default validators => (values, configs) => {
   if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line unicorn/no-lonely-if
     if (!List.isList(values)) throw new Error('validators.list: "values" must be a list');
   }
 
