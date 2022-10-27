@@ -5,10 +5,11 @@
  *
  * @returns {string}
  */
-export default (value) => {
+export default function removeMultiSpace(value) {
   if (process.env.NODE_ENV !== 'production') {
+    // eslint-disable-next-line unicorn/no-lonely-if
     if (typeof value !== 'string') throw new Error('cleaners.removeMultiSpace: value must be of type string');
   }
 
   return value.replace(/\s\s+/g, ' ');
-};
+}
