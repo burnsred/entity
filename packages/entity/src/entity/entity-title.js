@@ -25,14 +25,15 @@ export default class Title extends Entity {
     title: new CharField({ mock: 'lorem.sentence' }),
     title_short: new CharField({ blank: true }),
     uuid: new IdField({ blank: true, mock: 'random.uuid' }),
-  }
+  };
 
   static paths = {
     urlBase: '',
-  }
+  };
 
   static actionArchive(record, configs = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (!idx(this, x => x.duck.actions.save)) throw new Error(`EntityTitle.actionArchive (${this.name}): "save" action is required in duck`);
     }
 
@@ -55,6 +56,7 @@ export default class Title extends Entity {
 
   static actionSave(record, configs = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (!idx(this, x => x.duck.actions.save)) throw new Error(`EntityTitle.actionSave (${this.name}): "save" action is required in duck`);
     }
 

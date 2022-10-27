@@ -10,5 +10,5 @@ export default class Locale extends Entity {
     description: new CharField(),
     id: new CharField(),
     uuid: new IdField({ mock: 'random.uuid' }),
-  }
+  };
 }

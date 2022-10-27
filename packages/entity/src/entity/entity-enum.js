@@ -8,7 +8,7 @@ import EntityField from '../field/field-entity';
  * Pre-defined Entity type for common Enumerated types.
  */
 export default class Enum extends Entity {
-  static idField = 'value'
+  static idField = 'value';
 
   static fields = {
     disabled: new BooleanField({ default: false }),
@@ -19,7 +19,7 @@ export default class Enum extends Entity {
       entity: EntityLocale,
     }),
     value: new CharField(),
-  }
+  };
 
   static toString(record) {
     return (record && record.get('label')) || '';

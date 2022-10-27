@@ -5,13 +5,7 @@ import EntityField from '../field/field-entity';
 import IdField from '../field/field-id';
 
 /**
- * @typedef ErrorMap
- *
- * ErrorMaps always contain the same 3 keys:
- * detail: {boolean}
- * message: {string}
- * list: {boolean} - indicates errors are over a list of values
- * errors: {List | ErrorMap}
+ * @typedef {module:entity} ErrorMap
  */
 
 /**
@@ -63,12 +57,12 @@ export default class Entity {
   /**
    * Reposition an Entity in a list of Entities.
    *
-   * @param {List<Record>} records
+   * @param {List<Map>} records
    * @param {object} options
    * @param {number} options.index - index of record to move
    * @param {number} options.indexTo - index to move it to
    *
-   * @returns {List<Record>}
+   * @returns {List<Map>}
    */
   static actionArrayMoveAtIndex(records, { index = null, indexTo = null } = {}) {
     if (process.env.NODE_ENV !== 'production') {
@@ -83,11 +77,11 @@ export default class Entity {
   /**
    * Create a new record with all default values
    *
-   * @param {Record} record
+   * @param {Map} record
    * @param {object} configs
-   * @param {Record} [configs.valueInitial] - supplied new record to use.
+   * @param {Map} [configs.valueInitial] - supplied new record to use.
    *
-   * @returns {Record}
+   * @returns {Map}
    */
   static actionReset(record, configs = {}) {
     return configs.valueInitial || this.dataToRecord({
@@ -98,10 +92,10 @@ export default class Entity {
   /**
    * Apply all cleaners to the given record.
    *
-   * @param {Record} record
+   * @param {Map} record
    * @param {object} configs
    *
-   * @returns {Record}
+   * @returns {Map}
    */
   static clean(record, configs = {}) {
     const newOptions = { ...configs, entity: this };
@@ -120,29 +114,36 @@ export default class Entity {
    * @returns {Map}
    */
   static dataToRecord(data = null) {
-    const fieldDataToValue = (value, key) => (
-      (List.isList(value) || Array.isArray(value))
-        ? List(value).map(val => this.fields[key].dataToValue(val, { data }))
-        : this.fields[key].dataToValue(value, { data })
-    );
-
-    const getDefaultFromField = field => (
-      (field.default instanceof Function)
-        ? field.default({ data })
-        : field.default
-    );
-
     const values = Map(data)
       .filter((value, key) => key in this.fields)
       .filterNot(value => value === undefined)
-      .map(fieldDataToValue);
+      .map(
+        (value, key) => (
+          (List.isList(value) || Array.isArray(value))
+            ? List(value).map(val => this.fields[key].dataToValue(val, { data }))
+            : this.fields[key].dataToValue(value, { data })
+        ),
+      );
 
     return data && Map(this.fields)
       .filter((value, key) => data[key] === undefined)
-      .map(getDefaultFromField)
+      .map(
+        field => (
+          (field.default instanceof Function)
+            ? field.default({ data })
+            : field.default
+        ),
+      )
       .merge(values);
   }
 
+  /**
+   * Factory to produce an EntityField for this Entity type.
+   *
+   * @param {object} [configs]
+   *
+   * @returns {EntityField}
+   */
   static getEntityField(configs = {}) {
     return new EntityField({ entity: this, ...configs });
   }
@@ -164,7 +165,7 @@ export default class Entity {
   /**
    * Test if the provided object is an Entity instance
    *
-   * @param {Any} maybeEntity
+   * @param {any} maybeEntity
    *
    * @returns {boolean}
    */
@@ -175,7 +176,7 @@ export default class Entity {
   /**
    * Test if the provided object is an instance of this Entity.
    *
-   * @param {Any} maybeDescendant
+   * @param {any} maybeDescendant
    *
    * @returns {boolean}
    */
@@ -222,7 +223,7 @@ export default class Entity {
       fields => ({
         ..._.mapValues(
           fields,
-          (field) => {
+          field => {
             if (field instanceof EntityField && !field.blank && field.entity.store) {
               return field.many
                 ? _.sampleSize(Object.values(field.entity.store))
@@ -264,6 +265,7 @@ export default class Entity {
    */
   static toData(record) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (record && !Map.isMap(record)) throw new Error(`Entity.toData (${this.name}): record must be either a Map or null or undefined`);
     }
 
@@ -272,7 +274,7 @@ export default class Entity {
       .filterNot((value, key) => this.fields[key].local)
       .map((value, key) => (
         List.isList(value)
-          ? value.map((val) => this.fields[key].toData(val, { record })).toArray()
+          ? value.map(val => this.fields[key].toData(val, { record })).toArray()
           : this.fields[key].toData(value, { record })
       ))
       .toObject();
@@ -280,6 +282,7 @@ export default class Entity {
 
   static toString(record) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (record && !Map.isMap(record)) throw new Error(`Entity.toString (${this.name}): record must be either a Map or null or undefined`);
     }
 
@@ -289,10 +292,10 @@ export default class Entity {
   /**
    * Apply all per-field validators
    *
-   * @param {Record} record
+   * @param {Map} record
    * @param {object} [configs]
    *
-   * @returns {Map}
+   * @returns {ErrorMap}
    */
   static validate(record, configs = {}) {
     if (!record) return record;
@@ -307,7 +310,7 @@ export default class Entity {
           record,
           validators: configs.fields && configs.fields[key],
         },
-      )).filterNot((errors) => errors.size === 0);
+      )).filterNot(errors => errors.size === 0);
 
     return detailErrors.size === 0
       ? null
