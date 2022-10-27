@@ -191,8 +191,11 @@ export default class Entity {
   /**
    * Given a Map of error records, do any of them apply to our fields?
    *
+   * If `name` is provided, only errors for names in the list are considered.
+   *
    * @param {Map} errors
    * @param {object} [configs]
+   * @param {string[]} [configs.name]
    *
    * @returns {boolean}
    */
@@ -202,7 +205,8 @@ export default class Entity {
         n => errors
           .filter(error => Map.isMap(error) && error.get('detail'))
           .flatMap(error => error.getIn(['errors', n]))
-          .filter(error => error.size > 0),
+          .filter(Boolean)
+          .size > 0,
       )
       : !errors || errors.size === 0;
   }
