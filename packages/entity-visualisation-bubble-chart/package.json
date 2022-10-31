@@ -39,8 +39,6 @@
     "styled-components": "5.3.6"
   },
   "peerDependencies": {
-    "@storybook/addon-actions": ">=4.0.0",
-    "@storybook/addon-knobs": ">=4.0.0",
     "d3": ">=5.0.0",
     "immutable": ">=4.1.0",
     "lodash": ">=4.12.0",
