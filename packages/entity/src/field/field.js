@@ -3,10 +3,10 @@ import { fromJS, isImmutable, List, Map } from 'immutable';
 import isRequired from '../validator/is-required';
 
 /**
- * @typedef {module:entity} Entity
- * @typedef {module:entity} ErrorMap
- * @typedef {module:cleaner} cleanerFunc
- * @typedef {module:validator} fieldValidatorFunc
+ * @typedef {module:cleaner~cleanerFunc} cleanerFunc
+ * @typedef {module:entity~Entity} Entity
+ * @typedef {module:entity~ErrorMap} ErrorMap
+ * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
  */
 
 /**
@@ -198,6 +198,7 @@ export default class Field {
    *
    * @param {any} value
    * @param {object} [options]
+   * @param {Function | fieldValidatorFunc[]} [options.validators] - alternative validators to apply
    *
    * @returns {ErrorMap[]}
    */

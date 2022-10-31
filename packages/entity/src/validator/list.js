@@ -1,7 +1,7 @@
 import { List, Map } from 'immutable';
 
 /**
- * @typedef {module:validator} fieldValidatorFunc
+ * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
  */
 
 /**
@@ -12,22 +12,23 @@ import { List, Map } from 'immutable';
  *
  * @returns {fieldValidatorFunc}
  */
-export default validators => (values, configs) => {
-  if (process.env.NODE_ENV !== 'production') {
+export default function list(validators) {
+  return (values, configs) => {
+    if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line unicorn/no-lonely-if
-    if (!List.isList(values)) throw new Error('validators.list: "values" must be a list');
-  }
+      if (!List.isList(values)) throw new Error('validators.list: "values" must be a list');
+    }
 
-  const errors = values.map(
-    value => List(validators)
-      .map(validator => validator(value, configs))
-      .filter(Boolean),
-  );
+    const errors = values.map(
+      value => List(validators)
+        .map(validator => validator(value, configs))
+        .filter(Boolean),
+    );
 
-  return errors.some(error => error.size > 0)
-    && Map({
+    return errors.some(error => error.size > 0) && Map({
       errors,
       list: true,
       message: 'Invalid list',
     });
-};
+  };
+}

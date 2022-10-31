@@ -5,14 +5,10 @@
  */
 
 /**
- * @typedef {module:field} Field
- */
-
-/**
  * @callback cleanerFunc
  * @param {any} value
  * @param {object} options
- * @param {Field} options.field - the invoking field
+ * @param {module:field~Field} options.field - the invoking field
  * @returns {any}
  */
 

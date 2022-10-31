@@ -22,7 +22,7 @@ export default class EnumField extends EntityField {
       : !!value && value.get('value') === name;
   }
 
-  valueToData(value = null) {
+  toData(value = null) {
     return value && this.entity.getId(value);
   }
 

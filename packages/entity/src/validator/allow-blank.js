@@ -1,6 +1,6 @@
 /**
  * Dummy validator
  *
- * @type {module:fieldValidatorFunc}
+ * @type {module:validator~fieldValidatorFunc}
  */
-export default () => false;
+export default function allowBlank() { return false; }

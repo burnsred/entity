@@ -1,8 +1,8 @@
 import isRequired from './is-required';
 
 /**
- * @typedef {module:field} Field
- * @typedef {module:validator} fieldValidatorFunc
+ * @typedef {module:field~Field} Field
+ * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
  */
 
 /**
@@ -15,7 +15,7 @@ import isRequired from './is-required';
  * @param {Field} configs.field
  * @param {string} [configs.flag]
  */
-export default (value, configs = {}) => {
+export default function mayNotBeBlank(value, configs = {}) {
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line unicorn/no-lonely-if
     if (!configs.field) throw new Error('validator.mayNotBeBlank: "field" option is required');
@@ -33,4 +33,4 @@ export default (value, configs = {}) => {
   return defaultError
     ? flagError && defaultError
     : flagError && 'May not be blank';
-};
+}

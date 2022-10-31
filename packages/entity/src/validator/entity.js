@@ -1,15 +1,11 @@
 /**
- * @typedef {module:validator} fieldValidatorFunc
- */
-
-/**
  * Validatory factory to produce a Validator which ...?
  *
  * @param {Function | object} validatorOptions
  *
- * @returns {fieldValidatorFunc}
+ * @returns {module:validator~fieldValidatorFunc}
  */
-export default validatorOptions => (value, options) => {
+export default function validatorOptions(value, options) {
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line unicorn/no-lonely-if
     if (!options.field) throw new Error('validator.validatorOptions: "field" option is required');
@@ -22,4 +18,4 @@ export default validatorOptions => (value, options) => {
       ...options,
     })
     : options.field.entity.validate(value, validatorOptions);
-};
+}

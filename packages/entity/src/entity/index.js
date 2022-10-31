@@ -4,13 +4,13 @@
  */
 
 /**
- * @typedef ErrorMap
- *
- * ErrorMaps always contain the same 3 keys:
+ * ErrorMaps always contain the same keys:
  * detail: {boolean}
  * message: {string}
  * list: {boolean} - indicates errors are over a list of values
- * errors: {List | ErrorMap}
+ * errors: {List<ErrorMap> | ErrorMap}
+ *
+ * @typedef ErrorMap
  */
 
 export { default as Entity } from './entity';

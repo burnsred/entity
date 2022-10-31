@@ -1,14 +1,10 @@
 /**
- * @typedef {module:validator} fieldValidatorFunc
- */
-
-/**
  * Validator to ensure the Entity value passes Field validations
  *
- * @type {fieldValidatorFunc}
+ * @type {module:validator~fieldValidatorFunc}
  */
-export default (value, options = {}) => {
+export default function entityValid(value, options = {}) {
   const errors = options.field.entity.validate(value, options);
 
   return !!errors && errors.size > 0 && errors;
-};
+}

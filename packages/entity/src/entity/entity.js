@@ -5,17 +5,22 @@ import EntityField from '../field/field-entity';
 import IdField from '../field/field-id';
 
 /**
- * @typedef {module:entity} ErrorMap
+ * @typedef {module:entity~ErrorMap} ErrorMap
+ * @typedef {module:cleaner~cleanerFunc} cleanerFunc
  */
 
 /**
  * Entity class
  *
  * Defines an entity, its fields, cleaners, etc.
+ *
+ * @interface
  */
 export default class Entity {
   /**
    * A list of cleaner functions
+   *
+   * @type {cleanerFunc[]}
    */
   static cleaners = [];
 
@@ -298,6 +303,7 @@ export default class Entity {
    *
    * @param {Map} record
    * @param {object} [configs]
+   * @param {object} [configs.fields] - An object mapping field name -> array of additional validators.
    *
    * @returns {ErrorMap}
    */

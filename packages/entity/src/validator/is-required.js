@@ -1,5 +1,5 @@
 /**
- * @typedef {module:validator} fieldValidatorFunc
+ * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
  */
 
 /**
@@ -7,7 +7,7 @@
  *
  * @type {fieldValidatorFunc}
  */
-export default (value, configs = {}) => {
+export default function isRequired(value, configs = {}) {
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line unicorn/no-lonely-if
     if (!configs.field) throw new Error('validators.isRequired: "field" option is required');
@@ -15,4 +15,4 @@ export default (value, configs = {}) => {
 
   return configs.field.isBlank(value, configs)
     && 'May not be blank';
-};
+}
