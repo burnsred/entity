@@ -16,9 +16,6 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c=../../configs/rollup.config.js",
-    "destroy": "rimraf dist",
-    "prebuild": "npm run destroy"
   },
   "dependencies": {
     "@babel/runtime-corejs3": "^7.19.4",
