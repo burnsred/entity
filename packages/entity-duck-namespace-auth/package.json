@@ -18,7 +18,6 @@
   "scripts": {
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.19.4",
     "@burnsred/entity": "0.6.2",
     "@burnsred/entity-duck-namespace-drf": "0.6.2",
     "idx": "2.5.5",

@@ -18,7 +18,6 @@
   "scripts": {
   },
   "dependencies": {
-    "@babel/runtime-corejs3": "^7.19.4",
     "@burnsred/default": "0.6.2",
     "@burnsred/entity": "0.6.2",
     "@burnsred/higher-order-component": "0.6.2",
