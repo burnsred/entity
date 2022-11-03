@@ -24,8 +24,6 @@
     "lint": "npm run lint:js && npm run lint:css",
     "lint:css": "stylelint '**/*.{js,jsx,ts,tsx}'",
     "lint:js": "eslint .",
-    "packages-build": "lerna run --scope '@burnsred/*' build",
-    "packages-destroy": "lerna run --scope '@burnsred/*' destroy",
     "packages-publish": "./scripts/publish.sh",
     "test": "jest --config configs/jest.config.js",
     "yarn": "yarn"
