@@ -69,9 +69,10 @@ export default class EntityField extends AnyField {
 
     return configs.name
       ? errors
-        // Filter out string errors; they have no field name
+        // Get only Map values marked as detail
         .filter(error => Map.isMap(error) && error.get('detail'))
         .flatMap(error => {
+          // Extract errors for the specified name
           const val = error.getIn(['errors', configs.name]);
           // If the `errors` value is a Map we must wrap it in a List to protect
           // from `flatMap` flattening it to [key, value] pairs.
