@@ -1,9 +1,12 @@
 {
-  "author": "Thierry Wong and Burnsred",
+  "author": "BurnsRED",
   "description": "ui",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.js"
+  },
   "name": "@burnsred/ui",
   "private": false,
   "repository": "https://github.com/burnsred/burnsred-entity-library.git",
@@ -13,15 +16,6 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c=../../configs/rollup.config.js",
-    "destroy": "rimraf dist",
-    "link-main:dist": "json -I -f package.json -e 'this.main=\"dist/index.js\"'",
-    "link-main:src": "json -I -f package.json -e 'this.main=\"src/index.js\"'",
-    "link-module:dist": "json -I -f package.json -e 'this.module=\"dist/index.js\"'",
-    "link-module:src": "json -I -f package.json -e 'this.module=\"src/index.js\"'",
-    "postbuild": "npm run link-main:dist && npm run link-module:dist",
-    "postdestroy": "npm run link-main:src && npm run link-module:src",
-    "prebuild": "npm run destroy"
   },
   "dependencies": {
     "@burnsred/default": "0.6.2",
@@ -30,7 +24,6 @@
     "@burnsred/theme": "0.6.2",
     "classnames": "2.2.6",
     "idx": "2.5.5",
-    "immutable": "4.0.0-rc.12",
     "prop-types": "15.7.2",
     "prop-types-exact": "1.2.0",
     "react-immutable-proptypes": "2.1.0",
@@ -38,24 +31,23 @@
     "react-onclickoutside": "6.8.0"
   },
   "devDependencies": {
-    "@storybook/addon-actions": "4.1.13",
-    "@storybook/addon-knobs": "4.1.13",
-    "jest-styled-components": "6.3.1",
+    "@storybook/addon-actions": "6.5.12",
+    "@storybook/addon-knobs": "6.4.0",
+    "immutable": "4.1.0",
     "lodash": "4.17.11",
     "react": "16.8.4",
     "react-dom": "16.8.4",
     "react-router-dom": "4.3.1",
     "react-test-renderer": "16.8.4",
-    "styled-components": "4.1.3"
+    "styled-components": "5.3.6"
   },
   "peerDependencies": {
-    "@storybook/addon-actions": ">=4.0.0",
-    "@storybook/addon-knobs": ">=4.0.0",
+    "immutable": ">=4.1.0",
     "lodash": ">=4.12.0",
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0",
     "react-router-dom": ">=4.0.0",
     "react-test-renderer": ">=16.8.0",
-    "styled-components": ">=4.0.0"
+    "styled-components": ">=5.3.0"
   }
 }

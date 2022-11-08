@@ -1,9 +1,30 @@
-import _ from 'lodash';
 import { fromJS, isImmutable, List, Map } from 'immutable';
 
 import isRequired from '../validator/is-required';
 
+/**
+ * @typedef {module:cleaner~cleanerFunc} cleanerFunc
+ * @typedef {module:entity~Entity} Entity
+ * @typedef {module:entity~ErrorMap} ErrorMap
+ * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
+ */
+
+/**
+ * Field base class for Entity classes
+ */
 export default class Field {
+  /**
+   *
+   * @param {object} [options]
+   * @param {string} [options.type]
+   * @param {boolean} [options.blank = false]
+   * @param {cleanerFunc[]} [options.cleaners = []]
+   * @param {boolean} [options.many = false]
+   * @param {List} [options.options]
+   * @param {Function | fieldValidatorFunc[]} [options.validators] - If passed a function,
+   *  will invoke the function, passing the default list of validators, and use
+   *  its result as the list of validators.
+   */
   constructor(options = {}) {
     if (process.env.NODE_ENV !== 'production') {
       if (options.options && !List.isList(options.options)) throw new Error(`Field.constructor (${this.constructor.name}): options.options must be a an immutable List`);
@@ -22,13 +43,23 @@ export default class Field {
       defaults,
       options,
       {
-        validators: _.isFunction(options.validators)
+        validators: (options.validators instanceof Function)
           ? options.validators(defaults.validators)
           : (options.validators || defaults.validators),
       },
     );
   }
 
+  /**
+   * Apply our configured cleaner functions to an Entity.
+   *
+   * Sets `configs.field` to this field when calling cleaners.
+   *
+   * @param {Entity} record
+   * @param {object} [configs]
+   *
+   * @returns {Entity}
+   */
   clean(record, configs = {}) {
     const newOptions = { ...configs, field: this };
 
@@ -38,16 +69,27 @@ export default class Field {
     );
   }
 
+  /**
+   * @param {any} data
+   *
+   * @returns {any}
+   */
   dataToValue(data) {
     return fromJS(data);
   }
 
+  /**
+   * Get the default value for this field.
+   *
+   * @returns {List | null}
+   */
   default() {
     return this.many ? List() : null;
   }
 
   getErrors(errors, configs = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (configs.name) throw new Error(`Field.getErrors (${this.constructor.name}): option "name" is not supported.`);
     }
 
@@ -56,6 +98,7 @@ export default class Field {
 
   getErrorsArray(errors, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.index === undefined) throw new Error(`Field.getErrorsArray (${this.constructor.name}): option "index" is required.`);
     }
 
@@ -64,8 +107,16 @@ export default class Field {
       .flatMap(error => error.getIn(['errors', options.index]));
   }
 
+  /**
+   * For compatibility with ?? interface.
+   *
+   * @param {object} [options]
+   *
+   * @returns {Field} this
+   */
   getField(options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.name) throw new Error(`Field.getField (${this.constructor.name}): method with option name is not supported.`);
     }
 
@@ -88,14 +139,27 @@ export default class Field {
 
   getValue(value, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.name) throw new Error(`Field.getValue (${this.constructor.name}): option "name" is not supported.`);
     }
 
     return options.name ? null : value;
   }
 
+  /**
+   * Test if this value is considered blank.
+   *
+   * Default implementation considers blank to be `null` for single values
+   * fields, or empty-list for multi.
+   *
+   * @param {any} value
+   * @param {object} [options]
+   *
+   * @returns {boolean}
+   */
   isBlank(value = null, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (options.name) throw new Error(`Field.isBlank (${this.constructor.name}): method with option name is not supported.`);
     }
 
@@ -112,6 +176,13 @@ export default class Field {
       : value;
   }
 
+  /**
+   * Convert this value to a querystring appropriate format.
+   *
+   * @param {any} value
+   *
+   * @returns {string}
+   */
   toParams(value) {
     return (value && value.toString()) || '';
   }
@@ -122,17 +193,27 @@ export default class Field {
       : value.toString();
   }
 
+  /**
+   * Apply configured validators
+   *
+   * @param {any} value
+   * @param {object} [options]
+   * @param {Function | fieldValidatorFunc[]} [options.validators] - alternative validators to apply
+   *
+   * @returns {ErrorMap[]}
+   */
   validate(value, options = {}) {
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (this.many && !List.isList(value)) throw new Error(`Field.validate (${this.constructor.name}-${options.fieldName}): "value" must be an "Immutable List" with field option "many"`);
     }
 
-    const validators = _.isFunction(options.validators)
+    const validators = (options.validators instanceof Function)
       ? options.validators(this.validators)
       : (options.validators || this.validators);
 
     return List(validators)
       .map(validator => validator(value, { ...options, field: this }))
-      .filter(error => error);
+      .filter(Boolean);
   }
 }

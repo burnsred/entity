@@ -1,9 +1,12 @@
 {
-  "author": "Thierry Wong and Burnsred",
+  "author": "BurnsRED",
   "description": "prop-types-duck",
   "license": "MIT",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "type": "module",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": "./src/index.js"
+  },
   "name": "@burnsred/prop-types-duck",
   "private": false,
   "repository": "https://github.com/burnsred/burnsred-entity-library.git",
@@ -13,15 +16,6 @@
     "access": "public"
   },
   "scripts": {
-    "build": "rollup -c=../../configs/rollup.config.js",
-    "destroy": "rimraf dist",
-    "link-main:dist": "json -I -f package.json -e 'this.main=\"dist/index.js\"'",
-    "link-main:src": "json -I -f package.json -e 'this.main=\"src/index.js\"'",
-    "link-module:dist": "json -I -f package.json -e 'this.module=\"dist/index.js\"'",
-    "link-module:src": "json -I -f package.json -e 'this.module=\"src/index.js\"'",
-    "postbuild": "npm run link-main:dist && npm run link-module:dist",
-    "postdestroy": "npm run link-main:src && npm run link-module:src",
-    "prebuild": "npm run destroy"
   },
   "dependencies": {
     "@burnsred/entity-duck": "0.6.2",

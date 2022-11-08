@@ -5,10 +5,17 @@ import AnyField from './field-any';
 import entityValid from '../validator/entity-valid';
 import list from '../validator/list';
 
+/**
+ * @typedef {module:entity~ErrorMap} ErrorMap
+ */
+
+/**
+ * Field for referencing another Entity.
+ */
 export default class EntityField extends AnyField {
   constructor(configs = {}) {
     const defaults = {
-      nested: true,
+      nested: true, // TODO(cjm): nothing appears to ever refence this?
       type: 'entity',
     };
 
@@ -21,14 +28,15 @@ export default class EntityField extends AnyField {
       configs,
       {
         validators: defaultValidators => (
-          _.isFunction(configs.validators)
-            ? configs.validators(defaultValidators.concat(entityValidators))
-            : configs.validators || defaultValidators.concat(entityValidators)
+          (configs.validators instanceof Function)
+            ? configs.validators([...defaultValidators, ...entityValidators])
+            : configs.validators || [...defaultValidators, ...entityValidators]
         ),
       },
     ));
 
     if (process.env.NODE_ENV !== 'production') {
+      // eslint-disable-next-line unicorn/no-lonely-if
       if (!configs.entity) throw new Error(`${this.constructor.name}.constructor: "entity" option is required`);
     }
   }
@@ -43,6 +51,16 @@ export default class EntityField extends AnyField {
     return this.blank ? null : this.entity.dataToRecord({});
   }
 
+  /**
+   * Get errors from a list of errors.
+   *
+   * If `name` is provided, will extract nested errors for only the specified field.
+   *
+   * @param {List<ErrorMap>} errors
+   * @param {object} [configs]
+   * @param {string} [configs.name] - limit to errors for a specific field
+   * @returns {List<ErrorMap>}
+   */
   getErrors(errors, configs = {}) {
     if (process.env.NODE_ENV !== 'production') {
       if (configs.name && !_.isString(configs.name)) throw new Error(`EntityField.getErrors (${this.entity.name}): "name" option must be either a string or undefined`);
@@ -51,9 +69,17 @@ export default class EntityField extends AnyField {
 
     return configs.name
       ? errors
+        // Get only Map values marked as detail
         .filter(error => Map.isMap(error) && error.get('detail'))
-        .flatMap(error => error.getIn(['errors', configs.name]))
-        .filter(error => error)
+        .flatMap(error => {
+          // Extract errors for the specified name
+          const val = error.getIn(['errors', configs.name]);
+          // If the `errors` value is a Map we must wrap it in a List to protect
+          // from `flatMap` flattening it to [key, value] pairs.
+          return Map.isMap(val) ? List[val] : val;
+        })
+        // Filter any empty values
+        .filter(Boolean)
       : errors;
   }
 

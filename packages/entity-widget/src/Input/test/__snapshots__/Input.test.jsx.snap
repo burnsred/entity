@@ -8,8 +8,8 @@ exports[`renders correctly 1`] = `
 <input
   className="c0"
   intl={
-    Object {
-      "defaultFormats": Object {},
+    {
+      "defaultFormats": {},
       "defaultLocale": "en",
       "formatDate": [Function],
       "formatHTMLMessage": [Function],
@@ -18,8 +18,8 @@ exports[`renders correctly 1`] = `
       "formatPlural": [Function],
       "formatRelative": [Function],
       "formatTime": [Function],
-      "formats": Object {},
-      "formatters": Object {
+      "formats": {},
+      "formatters": {
         "getDateTimeFormat": [Function],
         "getMessageFormat": [Function],
         "getNumberFormat": [Function],
@@ -27,7 +27,7 @@ exports[`renders correctly 1`] = `
         "getRelativeFormat": [Function],
       },
       "locale": "en",
-      "messages": Object {},
+      "messages": {},
       "now": [Function],
       "onError": [Function],
       "textComponent": "span",

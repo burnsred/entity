@@ -1,17 +1,17 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`renders correctly 1`] = `
-.c1 {
-  display: block;
-  width: 100%;
-}
-
 .c0 .react-datepicker-wrapper {
   display: block;
 }
 
 .c0 .react-datepicker__input-container {
   display: block;
+}
+
+.c1 {
+  display: block;
+  width: 100%;
 }
 
 <div

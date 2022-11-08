@@ -1,3 +1,17 @@
+/**
+ * Validator functions are applied to Field values.
+ *
+ * @module validator
+ */
+
+/**
+ * @callback fieldValidatorFunc
+ * @param {any} value
+ * @param {object} options
+ * @param {module:field~Field} options.field - the invoking field
+ * @returns {?string | ?module:entity~ErrorMap} - error message(s)
+ */
+
 export { default as allowBlank } from './allow-blank';
 
 export { default as entityValid } from './entity-valid';
