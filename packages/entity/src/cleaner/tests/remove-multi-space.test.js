@@ -1,4 +1,4 @@
-import removeMultiSpace from '../remove-multi-space';
+import { removeMultiSpace } from '../index';
 
 describe('removeMultiSpace', () => {
   it.each([

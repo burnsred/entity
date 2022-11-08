@@ -1,11 +1,7 @@
 /**
- * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
- */
-
-/**
  * Validator to ensure the value is not blank according to the rules of the field.
  *
- * @type {fieldValidatorFunc}
+ * @type {module:validator~fieldValidatorFunc}
  */
 export default function isRequired(value, configs = {}) {
   if (process.env.NODE_ENV !== 'production') {

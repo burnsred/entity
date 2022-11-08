@@ -1,16 +1,12 @@
 import { List, Map } from 'immutable';
 
 /**
- * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
- */
-
-/**
  * Validator factory to produce a validator which applies the supplied list of
  * validators to each item in the values list.
  *
- * @param {fieldValidatorFunc[]} validators
+ * @param {module:validator~fieldValidatorFunc[]} validators
  *
- * @returns {fieldValidatorFunc}
+ * @returns {module:validator~fieldValidatorFunc}
  */
 export default function list(validators) {
   return (values, configs) => {

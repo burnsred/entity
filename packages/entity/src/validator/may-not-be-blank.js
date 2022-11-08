@@ -1,18 +1,13 @@
 import isRequired from './is-required';
 
 /**
- * @typedef {module:field~Field} Field
- * @typedef {module:validator~fieldValidatorFunc} fieldValidatorFunc
- */
-
-/**
  * Validator requiring the value not be what the Field considers blank.
  *
- * @type {fieldValidatorFunc}
+ * @type {module:validator~fieldValidatorFunc}
  *
  * @param {any} value
  * @param {object} configs
- * @param {Field} configs.field
+ * @param {module:field~Field} configs.field
  * @param {string} [configs.flag]
  */
 export default function mayNotBeBlank(value, configs = {}) {

@@ -1,6 +1,10 @@
-import sliceToMaxLength from '../slice-to-max-length';
+import { sliceToMaxLength } from '..';
 
 describe('sliceToMaxLength', () => {
+  it('should throw an error if value is not a string', () => {
+    expect(() => sliceToMaxLength(123, {})).toThrow('cleaners.removeMultiSpace: value must be of type string');
+  });
+
   it.each([
     ['test', 'tes'],
     ['yes', 'yes'],

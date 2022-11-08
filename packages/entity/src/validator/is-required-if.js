@@ -8,11 +8,11 @@ import isRequired from './is-required';
  *
  * @returns {module:validator~fieldValidatorFunc}
  */
-export default predicate => (value, configs) => {
+export default function isRequiredIf(predicate) {
   if (process.env.NODE_ENV !== 'production') {
     // eslint-disable-next-line unicorn/no-lonely-if
     if (!(predicate instanceof Function)) throw new Error('validators.isRequiredIf: predicate argument must be of type function');
   }
 
-  return predicate({ value, ...configs }) && isRequired(value, configs);
-};
+  return (value, configs) => predicate({ value, ...configs }) && isRequired(value, configs);
+}
